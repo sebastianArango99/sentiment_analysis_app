@@ -28,7 +28,7 @@ from io import BytesIO
 
 @st.cache
 def load_model_from_github():
-    response = requests.get("https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb")
+    response = requests.get("https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb?raw=true")
     response.raise_for_status()
     model_content = BytesIO(response.content)
     loaded_model = tf.saved_model.load(model_content)
