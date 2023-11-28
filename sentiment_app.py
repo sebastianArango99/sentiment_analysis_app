@@ -50,13 +50,12 @@ tok = Tokenizer(num_words=4000)
 
 
 # Function to plot comparison bar chart
-def plot_comparison( score_2):
+def plot_comparison(score_2):
     fig, ax = plt.subplots()
-    ax.bar(['Modelo 1-LSTM'], [ score_2], color=['blue'])
+    ax.bar(['Modelo 1-LSTM'], [score_2], color=['blue'])
     ax.set_ylabel('Score Modelo')
     ax.set_title('Score de Análisis de Sentimiento')
     return fig
-
 # Load your models
 #model_1 = joblib.load("C:/Users/Sebastián/OneDrive/Desktop/sentiment_model.joblib")
 
