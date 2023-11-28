@@ -96,9 +96,6 @@ def prepare_input(input_text, tokenizer, maxlen):
     padded_sequences = pad_sequences(sequences, maxlen=500)
     return padded_sequences
 
-    
-
-
 def predict(input_text):
     inputs = tokenizer.encode_plus(
         input_text,
@@ -110,7 +107,9 @@ def predict(input_text):
         return_token_type_ids=True,  # Include token_type_ids
         return_tensors='tf'
     )
-    prediction = model.predict([inputs['input_ids'], inputs['attention_mask'], inputs['token_type_ids']])
+    prediction = model.predict({'input_ids': inputs['input_ids'], 
+                                'attention_mask': inputs['attention_mask'], 
+                                'token_type_ids': inputs['token_type_ids']})
     return prediction
 
 # Streamlit app title
