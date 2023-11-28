@@ -30,7 +30,7 @@ tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 
 tok = Tokenizer(num_words=4000)
 
-
+@st.cache(allow_output_mutation=True)
 # Function to plot comparison bar chart
 def plot_comparison(score_1, score_2):
     fig, ax = plt.subplots()
