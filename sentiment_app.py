@@ -23,6 +23,17 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from transformers import AutoTokenizer, TFAutoModel
 import nltk 
 
+import requests
+from io import BytesIO
+
+@st.cache
+def load_model_from_github():
+    response = requests.get("https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb")
+    response.raise_for_status()
+    model_content = BytesIO(response.content)
+    loaded_model = tf.saved_model.load(model_content)
+    return loaded_model
+
 checkpoint = "bert-base-uncased"
 
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
@@ -50,7 +61,7 @@ def load_model(model_directory):
     return model_2
 
 model_2 = load_model("./best_model.h5")#tf.keras.models.load_model("C:/models/modelo_lstm")
-model_1= tf.saved_model.load("./modelo_bert/")
+model_1= load_model_from_github()#tf.saved_model.load("./modelo_bert/")
 #serving_default = model_1.signatures['serving_default']
 
 def tokenization(data, **kwargs):
