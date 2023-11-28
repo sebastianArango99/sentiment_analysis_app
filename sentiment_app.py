@@ -107,9 +107,10 @@ def predict(input_text):
         padding='max_length',
         truncation=True,
         return_attention_mask=True,
+        return_token_type_ids=True,  # Include token_type_ids
         return_tensors='tf'
     )
-    prediction = model_1.predict([inputs['input_ids'], inputs['attention_mask']])
+    prediction = model.predict([inputs['input_ids'], inputs['attention_mask'], inputs['token_type_ids']])
     return prediction
 
 # Streamlit app title
