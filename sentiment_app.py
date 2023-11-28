@@ -69,7 +69,7 @@ def load_model(model_directory):
 
 model_2 = load_model("./best_model.h5")#tf.keras.models.load_model("C:/models/modelo_lstm")
 model_1= tf.saved_model.load("./tiny_bert/")#load_model_from_github('https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb')#tf.saved_model.load("./modelo_bert/")
-serving_default = model_1.signatures['serving_default']
+#serving_default = model_1.signatures['serving_default']
 
 def tokenization(data, **kwargs):
     return tokenizer(data,
@@ -81,7 +81,7 @@ def tokenization(data, **kwargs):
 from transformers import BertTokenizer
 
 # Load the BERT tokenizer
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+tokenizer = BertTokenizer.from_pretrained('"prajjwal1/bert-tiny"')
 
 # Load the tokenizer
 
@@ -99,18 +99,12 @@ def prepare_input(input_text, tokenizer, maxlen):
     
 
 
-def predict(model, prepared_input):
-    # The serving signature provides a callable function to make predictions
-    infer = model.signatures['serving_default']
-    # Prepare input data as expected by the model, typically as a dictionary
-    # The exact key name ('input_1', 'input_text', etc.) depends on how the model was trained
-    input_data = {'inputs': prepared_input}  # You need to know the correct key for your model
-    # Make a prediction
-    prediction_output = infer(**input_data)
-    # The output will be a dictionary. Use the appropriate key to get the prediction result
-    # The key here ('output_0', 'scores', etc.) also depends on your model's output signature
-    prediction_result = prediction_output['value'].numpy()  # Adjust the key as necessary
-    return prediction_result
+def predict(input_text):
+    # Tokenize and preprocess the input text
+    inputs = tokenizer.encode_plus(input_text, return_tensors='tf', max_length=55, truncation=True, padding='max_length')
+    # Predict
+    prediction = model.predict([inputs['input_ids'], inputs['attention_mask']])
+    return prediction
 
 
 # Streamlit app title
@@ -156,9 +150,9 @@ if st.button('Analizar Fragmento'):
         }
 
         # Make the prediction
-        prediction_1 = serving_default(**model_inputs)
+        #prediction_1 = serving_default(**model_inputs)
         
-        prediction_1 = serving_default(**tokenizer.encode_plus(input_text, return_tensors="tf"))
+        prediction_1 =predict(input_text)# serving_default(**tokenizer.encode_plus(input_text, return_tensors="tf"))
         prediction_2 = model_2.predict(prepared_input)
 
         # Extract scores from the predictions
