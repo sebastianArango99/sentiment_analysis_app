@@ -50,11 +50,11 @@ tok = Tokenizer(num_words=4000)
 
 
 # Function to plot comparison bar chart
-def plot_comparison(score_2):
+def plot_comparison(score_1, score_2):
     fig, ax = plt.subplots()
-    ax.bar('Modelo 1-LSTM', score_2, color=['blue'])
+    ax.bar(['Modelo 1-LSTM', 'Modelo 2-LSTM'], [score_1, score_2], color=['blue', 'green'])
     ax.set_ylabel('Score Modelo')
-    ax.set_title('Score de Análisis de Sentimiento')
+    ax.set_title('Comparación de Análisis de Sentimiento')
     return fig
 # Load your models
 #model_1 = joblib.load("C:/Users/Sebastián/OneDrive/Desktop/sentiment_model.joblib")
@@ -174,8 +174,15 @@ if st.button('Analizar Fragmento'):
         st.write('Resultado del Modelo 2 (Score-Modelo): ', score_2)
 
         # Plot and display comparison chart
-        comparison_chart = plot_comparison(score_2)
+        comparison_chart = plot_comparison(score_1, score_2)
         st.pyplot(comparison_chart)
+
+        if score_1>0.5 and score_2>0.5:
+            st.write("Dado que ambos modelos recomiendan una categoría positiva (el score es mayor a 0.5) podemos concluir que el texto tiene una connotación positiva")
+        elif score_1<0.5 and score_2<0.5:
+            st.write("Dado que ambos modelos recomiendan una categoría negativo (el score es menor a 0.5) podemos concluir que el texto tiene una connotación negativa ")
+        else:
+            st.write("Dado que los resultados son inconclusos podemos observar que en por lo menos un modelo hay una connotación negativa y en la otra una connotación positiva")
     else:
         st.write('Por favor, introduce algún texto para analizar.')
 
