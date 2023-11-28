@@ -138,7 +138,7 @@ if st.button('Analizar Fragmento'):
         }
 
         # Make the prediction
-        prediction_1 = serving_default(**model_inputs)
+        #prediction_1 = serving_default(**model_inputs)
         
         #prediction_1 = serving_default(**tokenizer.encode_plus(input_text, return_tensors="tf"))
         prediction_2 = model_2.predict(prepared_input)
