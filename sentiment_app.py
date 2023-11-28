@@ -100,12 +100,17 @@ def prepare_input(input_text, tokenizer, maxlen):
 
 
 def predict(input_text):
-    # Tokenize and preprocess the input text
-    inputs = tokenizer.encode_plus(input_text, return_tensors='tf', max_length=55, truncation=True, padding='max_length')
-    # Predict
+    inputs = tokenizer.encode_plus(
+        input_text,
+        add_special_tokens=True,
+        max_length=55,
+        padding='max_length',
+        truncation=True,
+        return_attention_mask=True,
+        return_tensors='tf'
+    )
     prediction = model_1.predict([inputs['input_ids'], inputs['attention_mask']])
     return prediction
-
 
 # Streamlit app title
 st.title('Comparación de Análisis de Sentimiento')
