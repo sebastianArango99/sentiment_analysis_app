@@ -104,12 +104,14 @@ def predict(input_text):
         padding='max_length',
         truncation=True,
         return_attention_mask=True,
-        return_token_type_ids=True,  # Include token_type_ids
         return_tensors='tf'
     )
-    prediction = model.predict({'input_ids': inputs['input_ids'], 
-                                'attention_mask': inputs['attention_mask'], 
-                                'token_type_ids': inputs['token_type_ids']})
+    # Dummy token_type_ids
+    token_type_ids = tf.zeros_like(inputs['input_ids'])
+
+    prediction = model.predict([inputs['input_ids'], 
+                                inputs['attention_mask'], 
+                                token_type_ids])
     return prediction
 
 # Streamlit app title
