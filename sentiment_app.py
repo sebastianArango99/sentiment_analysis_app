@@ -103,7 +103,7 @@ def predict(input_text):
     # Tokenize and preprocess the input text
     inputs = tokenizer.encode_plus(input_text, return_tensors='tf', max_length=55, truncation=True, padding='max_length')
     # Predict
-    prediction = model.predict([inputs['input_ids'], inputs['attention_mask']])
+    prediction = model_1.predict([inputs['input_ids'], inputs['attention_mask']])
     return prediction
 
 
