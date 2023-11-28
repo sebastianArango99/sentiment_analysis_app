@@ -81,7 +81,7 @@ def tokenization(data, **kwargs):
 from transformers import BertTokenizer
 
 # Load the BERT tokenizer
-tokenizer = BertTokenizer.from_pretrained('"prajjwal1/bert-tiny"')
+tokenizer =  BertTokenizer.from_pretrained("prajjwal1/bert-tiny")
 
 # Load the tokenizer
 
