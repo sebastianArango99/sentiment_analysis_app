@@ -57,7 +57,7 @@ def plot_comparison(score_2):
     ax.set_title('Score de Análisis de Sentimiento')
     return fig
 # Load your models
-model_1 = joblib.load("C:/Users/Sebastián/OneDrive/Desktop/sentiment_model.joblib")
+#model_1 = joblib.load("C:/Users/Sebastián/OneDrive/Desktop/sentiment_model.joblib")
 
 
 # Function to load the model
@@ -67,7 +67,7 @@ def load_model(model_directory):
     return model_2
 
 model_2 = load_model("./best_model.h5")#tf.keras.models.load_model("C:/models/modelo_lstm")
-#model_1= tf.keras.models.load_model("./tiny_bert/")#load_model_from_github('https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb')#tf.saved_model.load("./modelo_bert/")
+model_1= model_2# tf.keras.models.load_model("./tiny_bert/")#load_model_from_github('https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb')#tf.saved_model.load("./modelo_bert/")
 #serving_default = model_1.signatures['serving_default']
 
 def tokenization(data, **kwargs):
@@ -158,18 +158,18 @@ if st.button('Analizar Fragmento'):
         # Make the prediction
         #prediction_1 = serving_default(**model_inputs)
         
-        #prediction_1 =predict(input_text)# serving_default(**tokenizer.encode_plus(input_text, return_tensors="tf"))
+        prediction_1 =model_2.predict(prepared_input)#(input_text)# serving_default(**tokenizer.encode_plus(input_text, return_tensors="tf"))
         prediction_2 = model_2.predict(prepared_input)
 
         # Extract scores from the predictions
-        #score_1 = prediction_1['dense_3'].numpy()[0, 0]
+        score_1 = prediction_1
         score_2 = prediction_2
 
         # Display results
-        #label1 = 'Positivo' if score_1 > 0.5 else 'Negativo'
+        label1 = 'Positivo' if score_1 > 0.5 else 'Negativo'
         label2 = 'Positivo' if score_2 > 0.5 else 'Negativo'
-        #st.write('Resultado del Modelo 1 (BERT): ', label1)
-        #st.write('Resultado del Modelo 1 (Score-Modelo): ', score_1)
+        st.write('Resultado del Modelo 1 (LSTM): ', label1)
+        st.write('Resultado del Modelo 1 (Score-Modelo): ', score_1)
         st.write('Resultado del Modelo 2 (LSTM): ', label2)
         st.write('Resultado del Modelo 2 (Score-Modelo): ', score_2)
 
