@@ -28,7 +28,7 @@ from io import BytesIO
 
 @st.cache
 def load_model_from_github():
-    response = requests.get("https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb?raw=true")
+    response = requests.get("https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/")
     response.raise_for_status()
     model_content = BytesIO(response.content)
     loaded_model = tf.saved_model.load(model_content)
@@ -41,7 +41,7 @@ tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 
 tok = Tokenizer(num_words=4000)
 
-@st.cache(allow_output_mutation=True)
+
 # Function to plot comparison bar chart
 def plot_comparison(score_1, score_2):
     fig, ax = plt.subplots()
