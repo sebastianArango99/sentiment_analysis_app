@@ -27,11 +27,18 @@ import requests
 from io import BytesIO
 
 @st.cache
-def load_model_from_github():
-    response = requests.get("https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/")
-    response.raise_for_status()
-    model_content = BytesIO(response.content)
-    loaded_model = tf.saved_model.load(model_content)
+def load_model_from_github(model_url, model_dir='./modelo_bert/'):
+    # Create the directory if it doesn't exist
+    Path(model_dir).mkdir(parents=True, exist_ok=True)
+
+    # Download the model file
+    response = requests.get(model_url)
+    if response.status_code == 200:
+        with open(os.path.join(model_dir, 'model.pb'), 'wb') as file:
+            file.write(response.content)
+    
+    # Load the model
+    loaded_model = tf.saved_model.load(model_dir)
     return loaded_model
 
 checkpoint = "bert-base-uncased"
@@ -61,7 +68,7 @@ def load_model(model_directory):
     return model_2
 
 model_2 = load_model("./best_model.h5")#tf.keras.models.load_model("C:/models/modelo_lstm")
-model_1= load_model_from_github()#tf.saved_model.load("./modelo_bert/")
+model_1= load_model_from_github('https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb')#tf.saved_model.load("./modelo_bert/")
 #serving_default = model_1.signatures['serving_default']
 
 def tokenization(data, **kwargs):
