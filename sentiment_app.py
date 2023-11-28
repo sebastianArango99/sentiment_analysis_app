@@ -68,7 +68,7 @@ def load_model(model_directory):
     return model_2
 
 model_2 = load_model("./best_model.h5")#tf.keras.models.load_model("C:/models/modelo_lstm")
-model_1= load_model_from_github('https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb')#tf.saved_model.load("./modelo_bert/")
+model_1= tf.saved_model.load("./tiny_bert/")#load_model_from_github('https://github.com/sebastianArango99/sentiment_analysis_app/blob/main/modelo_bert/saved_model.pb')#tf.saved_model.load("./modelo_bert/")
 #serving_default = model_1.signatures['serving_default']
 
 def tokenization(data, **kwargs):
