@@ -171,7 +171,7 @@ if st.button('Analizar Fragmento'):
         #st.write('Resultado del Modelo 1 (BERT): ', label1)
         #st.write('Resultado del Modelo 1 (Score-Modelo): ', score_1)
         st.write('Resultado del Modelo 2 (LSTM): ', label2)
-        st.write('Resultado del Modelo 2 (Score-Modelo): ', score_2[0,0])
+        st.write('Resultado del Modelo 2 (Score-Modelo): ', score_2)
 
         # Plot and display comparison chart
         comparison_chart = plot_comparison(score_2)
