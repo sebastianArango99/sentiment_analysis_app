@@ -50,11 +50,11 @@ tok = Tokenizer(num_words=4000)
 
 
 # Function to plot comparison bar chart
-def plot_comparison(score_1, score_2):
+def plot_comparison( score_2):
     fig, ax = plt.subplots()
-    ax.bar(['Modelo 1-BERT', 'Modelo 2-LSTM'], [score_1, score_2], color=['blue', 'green'])
+    ax.bar(['Modelo 1-LSTM'], [ score_2], color=['blue'])
     ax.set_ylabel('Score Modelo')
-    ax.set_title('Comparación de Análisis de Sentimiento')
+    ax.set_title('Score de Análisis de Sentimiento')
     return fig
 
 # Load your models
@@ -175,8 +175,8 @@ if st.button('Analizar Fragmento'):
         st.write('Resultado del Modelo 2 (Score-Modelo): ', score_2[0,0])
 
         # Plot and display comparison chart
-        #comparison_chart = plot_comparison(score_1, score_2)
-        #st.pyplot(comparison_chart)
+        comparison_chart = plot_comparison(score_2)
+        st.pyplot(comparison_chart)
     else:
         st.write('Por favor, introduce algún texto para analizar.')
 
